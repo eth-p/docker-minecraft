@@ -21,7 +21,7 @@ curl -L -o \
 }
 
 # Run build tools.
-java -jar "BuildTools.jar" --rev "$MINECRAFT_VERSION"
+java -Xmx1024M -jar "BuildTools.jar" --rev "$MINECRAFT_VERSION"
 
 # Move server software.
 find -maxdepth 1 -name "spigot-*.jar" -exec "mv" "{}" "$MINECRAFT_BIN/spigot-server.jar" ";"
