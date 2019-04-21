@@ -56,7 +56,7 @@ commit_value() {
 		"--args:jvm")    OPTS_JVM+=("$V")                                           ;;
 		"--args:server") OPTS_PROGRAM+=("$V")                                       ;;
 		"--server")      {
-			[[ -f "/usr/share/minecraft/${V}-server.jar ]] || die "Unknown server type '$V'"
+			[[ -f "/usr/share/minecraft/${V}-server.jar" ]] || die "Unknown server type '$V'"
 			OPT_VARIANT="$V"
 		} ;;
 		"--recommended") {
