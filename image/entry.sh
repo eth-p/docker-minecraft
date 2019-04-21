@@ -101,6 +101,9 @@ done
 # Prepend arguments.
 OPTS_JVM=("-Xms${JVM_ARG_MEM_MIN}" "-Xmx${JVM_ARG_MEM_MAX}" "${OPTS_JVM[@]}")
 
+# Accept EULA.
+echo "eula=true" > eula.txt
+
 # Execute.
 echo java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "@{OPTS_PROGRAM[@]}"
 exec java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "@{OPTS_PROGRAM[@]}"
