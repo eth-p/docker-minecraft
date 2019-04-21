@@ -4,9 +4,8 @@ cd "$MINECRAFT_HOME"
 # Defaults.
 OPTS_JVM=()
 OPTS_PROGRAM=()
-OPTS_CPU=()
+OPT_VARIANT="spigot"
 
-# Arguments.
 JVM_ARG_MEM_MIN=(512M)
 JVM_ARG_MEM_MAX=(1024M)
 HOST_CORES="$(grep -c ^processor /proc/cpuinfo)"
@@ -29,6 +28,7 @@ parse_key() {
 	
 	case "$key" in
 		-m|--memory)                                                        key="--memory"      ;;
+		-s|--server)                                                        key="--server"      ;;
 		-m:M|--memory:max)                                                  key="--memory:max"  ;;
 		-m:m|--memory:min)                                                  key="--memory:min"  ;;
 		-+|--recommended)                                                   key="--recommended" ;;
@@ -55,6 +55,10 @@ commit_value() {
 		"--cpu")         HOST_CORES="$V"                                            ;;
 		"--args:jvm")    OPTS_JVM+=("$V")                                           ;;
 		"--args:server") OPTS_PROGRAM+=("$V")                                       ;;
+		"--server")      {
+			[[ -f "/usr/share/minecraft/${V}-server.jar ]] || die "Unknown server type '$V'"
+			OPT_VARIANT="$V"
+		} ;;
 		"--recommended") {
 			JVM_ARG_MEM_MAX="$(awk 'NR == 1 { print int($1 / 1.5) }')M"
 			JVM_ARG_MEM_MIN="$(awk 'NR == 1 { print int($1 / 3) }'M"
@@ -98,5 +102,5 @@ done
 OPTS_JVM=("-Xms${JVM_ARG_MEM_MIN}" "-Xmx${JVM_ARG_MEM_MAX}" "${OPTS_JVM[@]}")
 
 # Execute.
-echo java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/spigot-server.jar" "@{OPTS_PROGRAM[@]}"
-exec java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/spigot-server.jar" "@{OPTS_PROGRAM[@]}"
+echo java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "@{OPTS_PROGRAM[@]}"
+exec java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "@{OPTS_PROGRAM[@]}"
