@@ -76,7 +76,7 @@ value=""
 bracket=false
 for arg in "$@"; do
 	if [[ "$bracket" = true ]]; then
-		if [[ "$arg" != "]" ]; then
+		if [[ "$arg" != "]" ]]; then
 			commit_value "$arg"
 			continue
 		fi
