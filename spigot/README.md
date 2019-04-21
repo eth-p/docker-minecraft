@@ -41,6 +41,18 @@ docker run -d \
 	--user "minecraft" \
 	--mount "source=minecraft-xxx,target=/minecraft" \
 	-p 25565:25565
-	minecraft
+	minecraft [args]
 ```
 
+
+
+**Arguments:**
+
+|Long|Short|Example|Description|
+|:--|:--|:--|:--|
+|--memory|-m|-m 1G|Sets the Java memory limit.|
+|--memory:min|-m:m|-m:m 256M|Sets the lower Java memory limit.|
+|--memory:max|-m:M|-m:M 2G|Sets the upper Java memory limit.|
+|--recommended|-+|-+|Sets recommended Java options.|
+|--args:jvm|-a:j|-a:j '\[' -Xmx1G -Xms128M '\]'|Passes through one or more Java Virtual Machine options.|
+|--args:server|-a:s|-a:s nogui|Passes through one or more Minecraft server options.|
