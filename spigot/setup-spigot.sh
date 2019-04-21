@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 set -e
 
 # Set up directories.
@@ -10,6 +11,7 @@ mkdir -p "$MINECRAFT_BIN"
 mkdir -p "$MINECRAFT_HOME"
 
 # Download Spigot build tools.
+build_state "Downloading Spigot build tools."
 curl -L -o \
 	"$TEMP/BuildTools.jar" \
 	"$SPIGOT_DOWNLOAD"
@@ -21,9 +23,13 @@ curl -L -o \
 }
 
 # Run build tools.
+build_state "Running Spigot build tools."
+build_note  SLOW
+echo "Building for Minecraft version '${MINECRAFT_VERSION}'."
 java -Xmx1024M -jar "BuildTools.jar" --rev "$MINECRAFT_VERSION"
 
 # Move server software.
+build_state "Copying server software..."
 find -maxdepth 1 -name "spigot-*.jar" -exec "mv" "{}" "$MINECRAFT_BIN/spigot-server.jar" ";"
 find -maxdepth 1 -name "craftbukkit-*.jar" -exec "mv" "{}" "$MINECRAFT_BIN/bukkit-server.jar" ";"
 find -maxdepth 1 -name "minecraft-*.jar" -exec "mv" "{}" "$MINECRAFT_BIN/minecraft-server.jar" ";"
@@ -33,4 +39,3 @@ echo "eula=true" > "$MINECRAFT_HOME/eula.txt"
 
 # Clean up.
 rm -rf "$TEMP"
-
