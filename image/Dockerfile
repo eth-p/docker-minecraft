@@ -25,6 +25,7 @@ COPY setup-finalize.sh /build/finalize.sh
 RUN /build/finalize.sh
 
 # Run main.
+COPY tools/* /mc/bin/*
 COPY entry.sh /entry
 ENTRYPOINT ["/entry"]
 CMD []
