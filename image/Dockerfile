@@ -10,9 +10,6 @@ ENV LANG=C.UTF-8 \
 	SPIGOT_DOWNLOAD="https://hub.spigotmc.org/jenkins/job/BuildTools/99/artifact/target/BuildTools.jar" \
 	SPIGOT_DOWNLOAD_HASH="31f976713c2780df99377dd54317fe3a637018ea03bf61617736f3f23e162768"
 
-# Copy utility scripts.
-COPY tools/* /mc/bin/*
-
 # Run setup scripts.
 COPY lib.sh /build/lib.sh
 COPY setup-tools.sh /build/setup-tools.sh
@@ -24,6 +21,10 @@ RUN /build/setup-java.sh
 COPY setup-spigot.sh /build/setup-spigot.sh
 RUN /build/setup-spigot.sh
 
+# Copy utility scripts.
+COPY tools/* /mc/bin/*
+
+# Finalize install.
 COPY setup-finalize.sh /build/finalize.sh
 RUN /build/finalize.sh
 
