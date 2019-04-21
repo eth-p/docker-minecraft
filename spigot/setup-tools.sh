@@ -3,4 +3,4 @@
 # ------------------------------------------------------------------------------
 
 apk upgrade --update
-apk add --update bash curl git ca-certificates
+apk add --update bash tput curl git ca-certificates
