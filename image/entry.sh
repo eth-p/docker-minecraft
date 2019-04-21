@@ -61,7 +61,7 @@ commit_value() {
 		} ;;
 		--recommended) {
 			JVM_ARG_MEM_MAX="$(awk 'NR == 1 { print int($1 / 1.5) }')M"
-			JVM_ARG_MEM_MIN="$(awk 'NR == 1 { print int($1 / 3) }'M"
+			JVM_ARG_MEM_MIN="$(awk 'NR == 1 { print int($1 / 3) }')M"
 			OPTS_JVM+=(
 				-XX:+UseG1GC -XX:+UseStringDeduplication 
 				-XX:+DisableExplicitGC -XX:MaxGCPauseMillis=10
