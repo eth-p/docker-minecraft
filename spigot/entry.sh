@@ -7,9 +7,10 @@ OPTS_PROGRAM=()
 OPTS_CPU=()
 
 # Arguments.
-JVM_ARG_MEM_MIN=(-Xms512M)
-JVM_ARG_MEM_MAX=(-Xmx1024M)
-ARG_CORES="$(grep -c ^processor /proc/cpuinfo)"
+JVM_ARG_MEM_MIN=(512M)
+JVM_ARG_MEM_MAX=(1024M)
+HOST_CORES="$(grep -c ^processor /proc/cpuinfo)"
+HOST_MEM="$(free -b | awk '$1 == "Mem:" { print int($2 / 1024 / 1014) }')"
 
 # Parse arguments.
 die() {
@@ -51,10 +52,18 @@ commit_value() {
 		"--memory")      JVM_ARG_MEM_MIN=("-Xms${V}"); JVM_ARG_MEM_MAX=("-Xmx${V}") ;;
 		"--memory:min")  JVM_ARG_MEM_MAX=("-Xms${V}")                               ;;
 		"--memory:max")  JVM_ARG_MEM_MAX=("-Xmx${V}")                               ;;
-		"--cpu")         ARG_CORES="$V"                                             ;;
+		"--cpu")         HOST_CORES="$V"                                            ;;
 		"--args:jvm")    OPTS_JVM+=("$V")                                           ;;
 		"--args:server") OPTS_PROGRAM+=("$V")                                       ;;
-		"--recommended") OPTS_JVM+=(-XX:+UseG1GC -XX:+UseStringDeduplication -XX:+DisableExplicitGC -XX:MaxGCPauseMillis=10 -XX:SoftRefLRUPolicyMSPerMB=10000 -XX:ParallelGCThreads="${ARG_CORES}") ;;
+		"--recommended") {
+			JVM_ARG_MEM_MAX="$(awk 'NR == 1 { print int($1 / 1.5) }')M"
+			JVM_ARG_MEM_MIN="$(awk 'NR == 1 { print int($1 / 3) }'M"
+			OPTS_JVM+=(
+				-XX:+UseG1GC -XX:+UseStringDeduplication 
+				-XX:+DisableExplicitGC -XX:MaxGCPauseMillis=10
+				-XX:SoftRefLRUPolicyMSPerMB=10000 -XX:ParallelGCThreads="${HOST_CORES}"
+			) 
+		} ;;
 	esac
 }
 
@@ -84,6 +93,9 @@ for arg in "$@"; do
 	
 	commit_value "$arg"
 done
+
+# Prepend arguments.
+OPTS_JVM=("-Xms${JVM_ARG_MEM_MIN}" "-Xmx${JVM_ARG_MEM_MAX}" "${OPTS_JVM[@]}")
 
 # Execute.
 echo java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/spigot-server.jar" "@{OPTS_PROGRAM[@]}"
