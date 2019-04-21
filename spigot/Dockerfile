@@ -10,6 +10,7 @@ ENV LANG=C.UTF-8 \
 	SPIGOT_DOWNLOAD_HASH="31f976713c2780df99377dd54317fe3a637018ea03bf61617736f3f23e162768"
 
 # Run setup scripts.
+COPY lib.sh /build/lib.sh
 COPY setup-tools.sh /build/setup-tools.sh
 RUN /build/setup-tools.sh
 
