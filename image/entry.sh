@@ -48,7 +48,7 @@ parse_key() {
 
 commit_value() {
 	local V="$1"
-	case "$key" of
+	case "$key" in
 		"--memory")      JVM_ARG_MEM_MIN=("-Xms${V}"); JVM_ARG_MEM_MAX=("-Xmx${V}") ;;
 		"--memory:min")  JVM_ARG_MEM_MAX=("-Xms${V}")                               ;;
 		"--memory:max")  JVM_ARG_MEM_MAX=("-Xmx${V}")                               ;;
