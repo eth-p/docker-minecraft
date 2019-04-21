@@ -21,10 +21,6 @@ RUN /build/setup-java.sh
 COPY setup-spigot.sh /build/setup-spigot.sh
 RUN /build/setup-spigot.sh
 
-# Copy utility scripts.
-ADD tools /mc/bin/
-
-# Finalize install.
 COPY setup-finalize.sh /build/finalize.sh
 RUN /build/finalize.sh
 
