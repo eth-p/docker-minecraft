@@ -14,10 +14,10 @@ COPY setup-tools.sh /build/setup-tools.sh
 RUN /build/setup-tools.sh
 
 COPY setup-java.sh /build/setup-java.sh
-RUN /tmp/setup-java.sh
+RUN /build/setup-java.sh
 
 COPY setup-spigot.sh /build/setup-spigot.sh
-RUN /tmp/setup-spigot.sh
+RUN /build/setup-spigot.sh
 
 COPY setup-finalize.sh /build/finalize.sh
 RUN /build/finalize.sh
