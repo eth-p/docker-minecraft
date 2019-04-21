@@ -49,17 +49,17 @@ parse_key() {
 commit_value() {
 	local V="$1"
 	case "$key" in
-		"--memory")      JVM_ARG_MEM_MIN=("-Xms${V}"); JVM_ARG_MEM_MAX=("-Xmx${V}") ;;
-		"--memory:min")  JVM_ARG_MEM_MAX=("-Xms${V}")                               ;;
-		"--memory:max")  JVM_ARG_MEM_MAX=("-Xmx${V}")                               ;;
-		"--cpu")         HOST_CORES="$V"                                            ;;
-		"--args:jvm")    OPTS_JVM+=("$V")                                           ;;
-		"--args:server") OPTS_PROGRAM+=("$V")                                       ;;
-		"--server")      {
+		--memory)      JVM_ARG_MEM_MIN=("-Xms${V}"); JVM_ARG_MEM_MAX=("-Xmx${V}") ;;
+		--memory:min)  JVM_ARG_MEM_MAX=("-Xms${V}")                               ;;
+		--memory:max)  JVM_ARG_MEM_MAX=("-Xmx${V}")                               ;;
+		--cpu)         HOST_CORES="$V"                                            ;;
+		--args:jvm)    OPTS_JVM+=("$V")                                           ;;
+		--args:server) OPTS_PROGRAM+=("$V")                                       ;;
+		--server)      {
 			[[ -f "/usr/share/minecraft/${V}-server.jar" ]] || die "Unknown server type '$V'"
 			OPT_VARIANT="$V"
 		} ;;
-		"--recommended") {
+		--recommended) {
 			JVM_ARG_MEM_MAX="$(awk 'NR == 1 { print int($1 / 1.5) }')M"
 			JVM_ARG_MEM_MIN="$(awk 'NR == 1 { print int($1 / 3) }'M"
 			OPTS_JVM+=(
