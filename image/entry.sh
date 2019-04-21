@@ -43,6 +43,10 @@ parse_key() {
 		case "$key" in
 			--args:*) die "Argument '$key' does not accept 'key=value' format." ;;
 		esac
+	else
+		case "$key" in
+			--recommended) commit_value "true" ;;
+		esac
 	fi
 }
 
@@ -105,5 +109,5 @@ OPTS_JVM=("-Xms${JVM_ARG_MEM_MIN}" "-Xmx${JVM_ARG_MEM_MAX}" "${OPTS_JVM[@]}")
 echo "eula=true" > eula.txt
 
 # Execute.
-echo java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "@{OPTS_PROGRAM[@]}"
-exec java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "@{OPTS_PROGRAM[@]}"
+echo java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "${OPTS_PROGRAM[@]}"
+exec java "${OPTS_JVM[@]}" -jar "/usr/share/minecraft/${OPT_VARIANT}-server.jar" "${OPTS_PROGRAM[@]}"
