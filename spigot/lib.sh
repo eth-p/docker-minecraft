@@ -10,7 +10,8 @@ build_status() {
 
 build_note() {
 	case "$1" in
-		SLOW) build_note "This may take a while..."
+		SLOW)          build_note "This may take a while..."                                  ;;
+		SLOW_DOWNLOAD) build_note "This may take a while depending on your download speed..." ;;
 		*) printf "\x1B[33m%s\x1B[0m\n" "$1" ;;
 	esac
 }
