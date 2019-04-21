@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------------------
 
 build_status() {
-	local sep="$(printf "%-$(tput cols)s" " " | tr ' ' '-')"
+	local sep="$(printf "%-$(tput cols)s" "-------------------------" | tr ' ' '-')"
 	printf "\x1B[33m%s\n%s\n%s\x1B[0m\n" "$sep" "$1" "$sep"
 }
 
