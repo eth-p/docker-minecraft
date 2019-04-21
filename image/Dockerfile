@@ -26,5 +26,5 @@ RUN /build/finalize.sh
 
 # Run main.
 COPY entry.sh /entry
-ENTRYPOINT /entry
-
+ENTRYPOINT [/entry]
+CMD []
