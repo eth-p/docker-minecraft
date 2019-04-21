@@ -6,8 +6,8 @@ ENV LANG=C.UTF-8 \
 	\
 	MINECRAFT_VERSION=latest \
 	MINECRAFT_HOME=/minecraft \
-	SPIGOT_DOWNLOAD="https://hub.spigotmc.org/jenkins/job/BuildTools/82/artifact/target/BuildTools.jar" \
-	SPIGOT_DOWNLOAD_HASH="273cb9ca052ac5b892bdcda46f9dfd57b413f40769a2490b2f278b3d7010c858"
+	SPIGOT_DOWNLOAD="https://hub.spigotmc.org/jenkins/job/BuildTools/99/artifact/target/BuildTools.jar" \
+	SPIGOT_DOWNLOAD_HASH="31f976713c2780df99377dd54317fe3a637018ea03bf61617736f3f23e162768"
 
 # Run setup scripts.
 COPY setup-tools.sh /tmp
