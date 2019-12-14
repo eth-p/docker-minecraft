@@ -7,7 +7,7 @@ A docker container for running a [Spigot](https://www.spigotmc.org/) server.
 ## Dockerfile Information
 
 - Alpine Linux Base
-- Oracle JDK 8
+- Alpine OpenJDK 11
 
 
 

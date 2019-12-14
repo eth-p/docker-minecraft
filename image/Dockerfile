@@ -3,8 +3,10 @@ FROM alpine:latest
 
 # Configuration
 ARG version=latest
+ARG java=11
 ENV LANG=C.UTF-8 \
 	\
+	JAVA_VERSION=$java \
 	MINECRAFT_VERSION=$version \
 	MINECRAFT_HOME=/minecraft \
 	SPIGOT_DOWNLOAD="https://hub.spigotmc.org/jenkins/job/BuildTools/103/artifact/target/BuildTools.jar" \
@@ -28,3 +30,4 @@ RUN /build/finalize.sh
 COPY entry.sh /entry
 ENTRYPOINT ["/entry"]
 CMD []
+
